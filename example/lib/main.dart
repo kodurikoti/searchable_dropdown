@@ -130,6 +130,7 @@ class _MyAppState extends State<MyApp> {
         ),
         searchHint: "Select any",
         onChanged: (value) {
+          print('value ${value?.length}');
           setState(() {
             selectedItems = value;
           });
@@ -139,8 +140,17 @@ class _MyAppState extends State<MyApp> {
               ? "Save ${selectedItems.length == 1 ? '"' + items[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
               : "Save without selection");
         },
-        selectedValueWidgetFn: (item) {
-          return (Text(item.toString()));
+        selectedValueWidgetFn: (selectedItems) {
+          print('selectedValueWidgetFn ${selectedItems?.length}');
+          String commaText='';
+          for (var item in selectedItems) {
+            if(commaText.isEmpty){
+              commaText = '${item.value}';
+            }else{
+              commaText = '$commaText, ${item.value}';
+            }
+          }
+          return (Text(commaText));
         },
         isExpanded: true,
       ),

@@ -526,16 +526,12 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     List<Widget> list = List<Widget>();
     if(widget.isCommaSeparated){
       if(widget.selectedValueWidgetFn != null){
-        String commaText='';
         if (selectedItems.length>0) {
+          List<DropdownMenuItem<T>> selectdeDropdownitems=[];
           for (int item in selectedItems) {
-            if(commaText.isEmpty){
-              commaText = '${widget.items[item].value}';
-            }else{
-              commaText = '$commaText, ${widget.items[item].value}';
-            }
+            selectdeDropdownitems.add(widget.items[item]);
           }
-          list.add(widget.selectedValueWidgetFn(commaText));
+          list.add(widget.selectedValueWidgetFn(selectdeDropdownitems));
         }
       }else{
         selectedItems?.forEach((item) {
