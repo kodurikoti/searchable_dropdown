@@ -123,6 +123,7 @@ class _MyAppState extends State<MyApp> {
       "Multi dialog": SearchableDropdown.multiple(
         items: items,
         selectedItems: selectedItems,
+        isCommaSeparated: true,
         hint: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Text("Select any"),
@@ -137,6 +138,9 @@ class _MyAppState extends State<MyApp> {
           return (selectedItems.isNotEmpty
               ? "Save ${selectedItems.length == 1 ? '"' + items[selectedItems.first].value.toString() + '"' : '(' + selectedItems.length.toString() + ')'}"
               : "Save without selection");
+        },
+        selectedValueWidgetFn: (item) {
+          return (Text(item.toString()));
         },
         isExpanded: true,
       ),

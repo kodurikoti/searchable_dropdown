@@ -70,6 +70,7 @@ class SearchableDropdown<T> extends StatefulWidget {
   final Color iconDisabledColor;
   final double iconSize;
   final bool isExpanded;
+  final bool isCommaSeparated;
   final bool isCaseSensitiveSearch;
   final Function searchFn;
   final Function onClear;
@@ -235,6 +236,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     Color iconDisabledColor,
     double iconSize = 24.0,
     bool isExpanded = false,
+    bool isCommaSeparated = false,
     bool isCaseSensitiveSearch = false,
     Function searchFn,
     Function onClear,
@@ -260,6 +262,7 @@ class SearchableDropdown<T> extends StatefulWidget {
       iconDisabledColor: iconDisabledColor,
       iconSize: iconSize,
       isExpanded: isExpanded,
+      isCommaSeparated: isCommaSeparated,
       isCaseSensitiveSearch: isCaseSensitiveSearch,
       closeButton: closeButton,
       displayClearIcon: displayClearIcon,
@@ -297,6 +300,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.iconDisabledColor,
     this.iconSize = 24.0,
     this.isExpanded = false,
+    this.isCommaSeparated = false,
     this.isCaseSensitiveSearch = false,
     this.closeButton,
     this.displayClearIcon = true,
@@ -337,6 +341,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.iconDisabledColor,
     this.iconSize = 24.0,
     this.isExpanded = false,
+    this.isCommaSeparated = false,
     this.isCaseSensitiveSearch = false,
     this.closeButton = "Close",
     this.displayClearIcon = false,
@@ -519,11 +524,31 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     }
     Widget innerItemsWidget;
     List<Widget> list = List<Widget>();
-    selectedItems?.forEach((item) {
-      list.add(widget.selectedValueWidgetFn != null
-          ? widget.selectedValueWidgetFn(widget.items[item].value)
-          : items[item]);
-    });
+    if(widget.isCommaSeparated){
+      if(widget.selectedValueWidgetFn != null){
+        String commaText='';
+        if (selectedItems.length>0) {
+          for (int item in selectedItems) {
+            if(commaText.isEmpty){
+              commaText = '${widget.items[item].value}';
+            }else{
+              commaText = '$commaText, ${widget.items[item].value}';
+            }
+          }
+          list.add(widget.selectedValueWidgetFn(commaText));
+        }
+      }else{
+        selectedItems?.forEach((item) {
+          list.add(items[item]);
+        });
+      }
+    }else{
+      selectedItems?.forEach((item) {
+        list.add(widget.selectedValueWidgetFn != null
+            ? widget.selectedValueWidgetFn(widget.items[item].value)
+            : items[item]);
+      });
+    }
     if (list.isEmpty && hintIndex != null) {
       innerItemsWidget = items[hintIndex];
     } else {
