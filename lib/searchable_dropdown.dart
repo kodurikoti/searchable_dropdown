@@ -526,7 +526,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     List<Widget> list = List<Widget>();
     if(widget.isCommaSeparated){
       if(widget.selectedValueWidgetFn != null){
-        if (selectedItems.length>0) {
+        if (selectedItems!=null&&selectedItems.length>0) {
           List<DropdownMenuItem<T>> selectdeDropdownitems=[];
           for (int item in selectedItems) {
             selectdeDropdownitems.add(widget.items[item]);
