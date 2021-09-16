@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 const EdgeInsetsGeometry _kAlignedButtonPadding =
     EdgeInsetsDirectional.only(start: 16.0, end: 4.0);
@@ -763,7 +764,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
   void _updateShownIndexes(String keyword) {
     shownIndexes = searchFn(keyword, widget.items);
   }
-
+  static const platformMethodCommunicationBackButton = const MethodChannel('com.pccsuk.innovation.basicchannelcommunication.BackButton');
   @override
   void initState() {
     if (widget.searchFn != null) {
@@ -796,6 +797,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
     }
     assert(searchFn != null);
     _updateShownIndexes('');
+    platformMethodCommunicationBackButton.setMethodCallHandler((call) => pop());
     super.initState();
   }
 
