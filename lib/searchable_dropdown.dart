@@ -764,7 +764,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
   void _updateShownIndexes(String keyword) {
     shownIndexes = searchFn(keyword, widget.items);
   }
-  static const platformMethodCommunicationBackButton = const MethodChannel('com.pccsuk.innovation.basicchannelcommunication.BackButton');
+  static const platformMethodCommunicationBackButton = const MethodChannel('com.pccsuk.innovation.basicchannelcommunication.PluginBackButton');
   @override
   void initState() {
     if (widget.searchFn != null) {
