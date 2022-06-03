@@ -64,6 +64,7 @@ class SearchableDropdown<T> extends StatefulWidget {
   final dynamic doneButton;
   final dynamic label;
   final dynamic closeButton;
+  final bool isShowSelectAllOrNone;
   final bool displayClearIcon;
   final Icon clearIcon;
   final Color iconEnabledColor;
@@ -230,6 +231,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     dynamic doneButton = "Done",
     dynamic label,
     dynamic closeButton = "Close",
+    bool isShowSelectAllOrNone = false,
     bool displayClearIcon = true,
     Icon clearIcon = const Icon(Icons.clear),
     Color iconEnabledColor,
@@ -265,6 +267,7 @@ class SearchableDropdown<T> extends StatefulWidget {
       isCommaSeparated: isCommaSeparated,
       isCaseSensitiveSearch: isCaseSensitiveSearch,
       closeButton: closeButton,
+      isShowSelectAllOrNone: isShowSelectAllOrNone,
       displayClearIcon: displayClearIcon,
       clearIcon: clearIcon,
       onClear: onClear,
@@ -304,6 +307,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.isCaseSensitiveSearch = false,
     this.closeButton,
     this.displayClearIcon = true,
+    this.isShowSelectAllOrNone = false,
     this.clearIcon = const Icon(Icons.clear),
     this.onClear,
     this.selectedValueWidgetFn,
@@ -344,6 +348,7 @@ class SearchableDropdown<T> extends StatefulWidget {
     this.isCommaSeparated = false,
     this.isCaseSensitiveSearch = false,
     this.closeButton = "Close",
+    this.isShowSelectAllOrNone = false,
     this.displayClearIcon = false,
     this.clearIcon = const Icon(Icons.clear),
     this.onClear,
@@ -378,10 +383,10 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
   TextStyle get _textStyle =>
       widget.style ??
       (_enabled && !(widget.readOnly ?? false)
-          ? Theme.of(context).textTheme.subhead
+          ? Theme.of(context).textTheme.subtitle1
           : Theme.of(context)
               .textTheme
-              .subhead
+              .subtitle1
               .copyWith(color: _disabledIconColor));
   bool get _enabled =>
       widget.items != null &&
@@ -479,6 +484,7 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
       hint: prepareWidget(widget.searchHint),
       isCaseSensitiveSearch: widget.isCaseSensitiveSearch,
       closeButton: widget.closeButton,
+      isShowSelectAllOrNone: widget.isShowSelectAllOrNone,
       keyboardType: widget.keyboardType,
       searchFn: widget.searchFn,
       multipleSelection: widget.multipleSelection,
@@ -706,6 +712,7 @@ class DropdownDialog<T> extends StatefulWidget {
   final Widget hint;
   final bool isCaseSensitiveSearch;
   final dynamic closeButton;
+  final bool isShowSelectAllOrNone;
   final TextInputType keyboardType;
   final Function searchFn;
   final bool multipleSelection;
@@ -725,6 +732,7 @@ class DropdownDialog<T> extends StatefulWidget {
     this.hint,
     this.isCaseSensitiveSearch = false,
     this.closeButton,
+    this.isShowSelectAllOrNone =false,
     this.keyboardType,
     this.searchFn,
     this.multipleSelection,
@@ -820,7 +828,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
               titleBar(),
               searchBar(),
               list(),
-              closeButtonWrapper(),
+              widget.isShowSelectAllOrNone?selectAllOrNoneButtonWrapper():closeButtonWrapper(),
             ],
           ),
         ),
@@ -1029,6 +1037,37 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
                         overflow: TextOverflow.ellipsis,
                       )),
                 )
+              ],
+            ),
+          ));
+        }) ??
+        SizedBox.shrink());
+  }
+
+  Widget selectAllOrNoneButtonWrapper() {
+    return (prepareWidget(widget.closeButton, parameter: selectedResult,
+            stringToWidgetFunction: (string) {
+          return (Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                RaisedButton(
+                    onPressed: () {
+                      setState(() {
+                        selectedResult.clear();
+                        selectedResult.addAll(Iterable<int>.generate(widget.items.length).toList());
+                      });
+                    },
+                    child: Text("Select all")),
+                RaisedButton(
+                    onPressed: () {
+                      setState(() {
+                        selectedResult.clear();
+                      });
+
+                    },
+                    child: Text("Select none")),
               ],
             ),
           ));

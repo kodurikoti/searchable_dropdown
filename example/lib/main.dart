@@ -385,29 +385,7 @@ class _MyAppState extends State<MyApp> {
           });
         },
         dialogBox: true,
-        closeButton: (selectedItemsClose) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              RaisedButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedItems.clear();
-                      selectedItems.addAll(
-                          Iterable<int>.generate(items.length).toList());
-                    });
-                  },
-                  child: Text("Select all")),
-              RaisedButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedItems.clear();
-                    });
-                  },
-                  child: Text("Select none")),
-            ],
-          );
-        },
+        isShowSelectAllOrNone: true,
         isExpanded: true,
       ),
       "Single dialog custom keyboard": SearchableDropdown.single(
