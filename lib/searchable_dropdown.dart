@@ -605,9 +605,9 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
     Widget result = DefaultTextStyle(
       style: _textStyle,
       child: Container(
-        padding: padding.resolve(Directionality.of(context)),
+        padding: EdgeInsets.all(0.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             widget.isExpanded ? Expanded(child: clickable) : clickable,
