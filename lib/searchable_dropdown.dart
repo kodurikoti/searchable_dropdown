@@ -867,7 +867,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
         ? prepareWidget(widget.doneButton,
         parameter: selectedResult,
         context: context, stringToWidgetFunction: (string) {
-          return (FlatButton.icon(
+          return (TextButton.icon(
               onPressed: !valid
                   ? null
                   : () {
@@ -1028,7 +1028,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     pop();
                   },
@@ -1056,7 +1056,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                RaisedButton(
+                ElevatedButton(
                     onPressed: () {
                       setState(() {
                         selectedResult.clear();
@@ -1064,7 +1064,7 @@ class _DropdownDialogState<T> extends State<DropdownDialog> {
                       });
                     },
                     child: Text("Select all")),
-                RaisedButton(
+                ElevatedButton(
                     onPressed: () {
                       setState(() {
                         selectedResult.clear();
