@@ -584,7 +584,9 @@ class _SearchableDropdownState<T> extends State<SearchableDropdown<T>> {
           } else {
             displayMenu.value = true;
           }
-          setState(() {});
+          if (mounted) {
+            setState(() {});
+          }
         },
         child: Row(
           children: <Widget>[
